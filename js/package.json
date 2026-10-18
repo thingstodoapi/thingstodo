@@ -1,0 +1,17 @@
+{
+  "name": "thingstodo",
+  "version": "0.1.0",
+  "description": "Search local events in plain words: concerts, pop-ups, markets, classes. Client for the Things To Do API.",
+  "keywords": ["events", "local events", "things to do", "concerts", "api", "mcp", "ai agents"],
+  "homepage": "https://thingstodoapi.com",
+  "repository": { "type": "git", "url": "git+https://github.com/thingstodoapi/thingstodo.git", "directory": "js" },
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist"],
+  "engines": { "node": ">=18" },
+  "scripts": { "build": "tsc", "prepublishOnly": "tsc" },
+  "devDependencies": { "typescript": "^5.6.0", "@types/node": "^20.0.0" }
+}

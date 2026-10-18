@@ -1,0 +1,50 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Events near me</title>
+<!-- One file, no build: open it in a browser. The API allows calls from any
+     origin, and works without a key up to 50 calls a day. -->
+<style>
+  body { font: 16px/1.5 system-ui, sans-serif; max-width: 640px; margin: 40px auto; padding: 0 16px; color: #0b0b0b; background: #f4f4f1 }
+  form { display: flex; gap: 8px; margin-bottom: 24px }
+  input { flex: 1; padding: 10px 12px; font: inherit; border: 1px solid #bbb; border-radius: 6px }
+  button { padding: 10px 16px; font: inherit; border: 0; border-radius: 6px; background: #0b0b0b; color: #fff; cursor: pointer }
+  li { list-style: none; margin: 0 0 18px }
+  .when, .where { color: #5a5a54; font-size: 14px }
+  #note { color: #5a5a54; font-size: 14px }
+</style>
+<h1>Events near me</h1>
+<form id="f"><input id="q" value="things to do this weekend" aria-label="What"><button>Search</button></form>
+<p id="note"></p>
+<ul id="list"></ul>
+<script type="module">
+const API = 'https://api.thingstodoapi.com/v1/search';
+const $ = (id) => document.getElementById(id);
+let here = null; // {lat, lng} once the browser shares a location
+
+navigator.geolocation?.getCurrentPosition(
+  (p) => { here = { lat: p.coords.latitude, lng: p.coords.longitude }; search(); },
+  () => search(), // no location: the words decide the place
+  { timeout: 5000 },
+);
+
+$('f').addEventListener('submit', (e) => { e.preventDefault(); search(); });
+
+async function search() {
+  const params = new URLSearchParams({ q: $('q').value, limit: 20 });
+  if (here) { params.set('lat', here.lat); params.set('lng', here.lng); params.set('km', 8); }
+  const res = await fetch(`${API}?${params}`);
+  const data = await res.json();
+  const i = data.query?.interpreted;
+  $('note').textContent = data.message || (i ? [i.topic, i.place, i.when].filter(Boolean).join(' · ') : '');
+  $('list').replaceChildren(...(data.results || []).map((e) => {
+    const li = document.createElement('li');
+    const link = e.links.tickets || e.links.source;
+    li.innerHTML = `<b></b><div class="when"></div><div class="where"></div>`;
+    li.querySelector('b').append(link ? Object.assign(document.createElement('a'), { href: link, textContent: e.title }) : e.title);
+    li.querySelector('.when').textContent = `${e.local.date} ${e.local.time || ''} ${e.price ? '· ' + e.price : ''}`;
+    li.querySelector('.where').textContent = [e.venue?.name, e.venue?.city].filter(Boolean).join(', ');
+    return li;
+  }));
+}
+</script>

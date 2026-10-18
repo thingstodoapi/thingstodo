@@ -1,0 +1,1 @@
+{ "name": "thingstodo-weekend-cli", "private": true, "type": "module", "dependencies": { "thingstodo": "^0.1.0" } }
