@@ -1,0 +1,19 @@
+{
+  "name": "thingstodo-ai",
+  "version": "0.1.0",
+  "description": "Things To Do API as AI SDK tools: let a model search local events in plain words.",
+  "keywords": ["ai", "ai-sdk", "tools", "events", "local events", "things to do", "agents"],
+  "homepage": "https://thingstodoapi.com/docs/ai-sdk/",
+  "repository": { "type": "git", "url": "git+https://github.com/thingstodoapi/thingstodo.git", "directory": "ai" },
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist"],
+  "engines": { "node": ">=18" },
+  "scripts": { "build": "tsc", "test": "node test.mjs", "prepublishOnly": "tsc" },
+  "dependencies": { "thingstodo": "^0.1.0" },
+  "peerDependencies": { "ai": ">=5.0.0", "zod": "^3.25.0 || ^4.0.0" },
+  "devDependencies": { "ai": "^7.0.0", "zod": "^4.0.0", "typescript": "^5.6.0", "@types/node": "^20.0.0" }
+}

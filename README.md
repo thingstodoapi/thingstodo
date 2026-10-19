@@ -43,6 +43,7 @@ sports). Which cities are covered: `GET /v1/coverage`.
 | | |
 |---|---|
 | [`js/`](js) | `npm install thingstodo`: a typed client for Node, Deno, Bun and browsers |
+| [`ai/`](ai) | `npm install thingstodo-ai`: the API as Vercel AI SDK tools |
 | [`python/`](python) | `pip install thingstodo`: a Python client with no dependencies |
 | [`examples/mcp`](examples/mcp) | Connect it to Claude, Cursor or any MCP client |
 | [`examples/python-agent`](examples/python-agent) | A weekend-planner agent with Claude, two ways: a tool, or the MCP connector |
